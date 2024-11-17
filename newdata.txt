@@ -1,0 +1,58 @@
+from sklearn import preprocessing
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.model_selection import train_test_split
+
+car_type = [
+    'sedan', 'SUV', 'hatchback', 'sports', 'truck', 'SUV', 'sedan', 'hatchback', 
+    'truck', 'SUV', 'sports', 'sedan', 'SUV', 'hatchback', 'sports', 'truck', 
+    'sedan', 'SUV', 'hatchback', 'sports', 'truck', 'SUV', 'sedan', 'hatchback', 
+    'truck', 'SUV', 'sports', 'sedan', 'SUV', 'hatchback', 'sports', 'truck'
+]
+le = preprocessing.LabelEncoder()
+car_type=le.fit_transform(car_type)
+fuel_type = [
+    'petrol', 'diesel', 'petrol', 'electric', 'diesel', 'hybrid', 'electric', 'petrol',
+    'diesel', 'petrol', 'electric', 'diesel', 'hybrid', 'petrol', 'electric', 'diesel',
+    'hybrid', 'electric', 'petrol', 'hybrid', 'diesel', 'petrol', 'electric', 'diesel',
+    'hybrid', 'electric', 'petrol', 'hybrid', 'diesel', 'petrol', 'electric', 'hybrid'
+]
+fuel_type_encoded = le.fit_transform(fuel_type)
+
+transmission = [
+    'manual', 'automatic', 'manual', 'automatic', 'manual', 'automatic', 'manual', 'automatic',
+    'manual', 'automatic', 'manual', 'automatic', 'manual', 'automatic', 'manual', 'automatic',
+    'manual', 'automatic', 'manual', 'automatic', 'manual', 'automatic', 'manual', 'automatic',
+    'manual', 'automatic', 'manual', 'automatic', 'manual', 'automatic', 'manual', 'automatic'
+]
+transmission_encoded = le.fit_transform(transmission)
+
+mileage = [
+    'high', 'medium', 'low', 'medium', 'high', 'low', 'medium', 'high',
+    'low', 'medium', 'high', 'medium', 'low', 'high', 'medium', 'low',
+    'high', 'medium', 'low', 'medium', 'high', 'low', 'medium', 'high',
+    'low', 'medium', 'high', 'medium', 'low', 'high', 'medium', 'low'
+]
+mileage_encoded = le.fit_transform(mileage)
+
+buy_decision = [
+    'yes', 'no', 'yes', 'no', 'yes', 'yes', 'no', 'yes',
+    'no', 'yes', 'no', 'yes', 'yes', 'no', 'yes', 'no',
+    'yes', 'yes', 'no', 'yes', 'no', 'yes', 'yes', 'no',
+    'yes', 'no', 'yes', 'yes', 'no', 'yes', 'no', 'yes'
+]
+buy_decision_encoded = le.fit_transform(buy_decision)
+
+features=list(zip(age_encoded,income_encoded,student_encoded,credit_rating_encoded,buys_computer_encoded))
+
+from sklearn.model_selection import train_test_split
+features_train, features_test,label_train,label_test=train_test_split(features, play_encoded, test_size=0.2, random_state=42)
+model = GaussianNB()
+model.fit(features_train, label_train)
+predicted = model.predict(features_test)
+print("Prediction:", predicted)
+conf_mat = confusion_matrix(label_test, predicted)
+print("Confusion Matrix:")
+print(conf_mat)
+accuracy = accuracy_score(label_test, predicted)
+print("Accuracy:",accuracy)
